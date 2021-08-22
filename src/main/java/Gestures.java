@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+import static io.appium.java_client.touch.LongPressOptions.longPressOptions;
 import static io.appium.java_client.touch.TapOptions.tapOptions;
 import static io.appium.java_client.touch.offset.ElementOption.element;
 
@@ -25,12 +26,18 @@ public class Gestures extends Base{
         By expandList = MobileBy.AccessibilityId("Expandable Lists");
 
         TouchAction action = new TouchAction(driver);
-        action.tap(TapOptions.tapOptions().withElement(ElementOption.element(driver.findElement(expandList)))).perform();
+        action.tap(tapOptions().withElement(element(driver.findElement(expandList)))).perform();
+        driver.findElementByXPath("//android.widget.TextView[@text='1. Custom Adapter']").click();
+        WebElement peopleNames = driver.findElementByXPath("//android.widget.TextView[@text='People Names']");
+        action.longPress(longPressOptions().withElement(element(peopleNames))
+                .withDuration(Duration.ofSeconds(2))).release().perform();
+
+        System.out.println(driver.findElementById("android:id/title").isDisplayed());
 
 
 //        TouchAction t = new TouchAction(driver);
 //        AndroidElement expandLinst = driver.findElementByAccessibilityId("Expandable Lists");
-//        t.tap(tapOptions().withElement(element(expandLinst))).perform();
+//        t.tap(tapOptions().withElement(element(expandLinst))).perform(); (don't work)
 
     }
 }
