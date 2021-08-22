@@ -22,6 +22,7 @@ public class Gestures extends Base{
 
         AndroidDriver<AndroidElement> driver = capabilities();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Views\"));");
         driver.findElementByXPath("//android.widget.TextView[@text='Views']").click();
         By expandList = MobileBy.AccessibilityId("Expandable Lists");
 
