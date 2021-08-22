@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 * xpath syntax
 * //tagName[@attribute='value']
 * */
-public class Basics extends Base {
+public class Basics extends HybridBase {
     public static void main(String[] args) throws MalformedURLException {
 
-       AndroidDriver<AndroidElement> driver = capabilities();
+       AndroidDriver<AndroidElement> driver = capabilities("emulator");
        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
        driver.findElementByXPath("//android.widget.TextView[@text='Preference']").click();
        driver.findElementByXPath("//android.widget.TextView[@text='3. Preference dependencies']").click();

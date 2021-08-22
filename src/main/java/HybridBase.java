@@ -7,12 +7,18 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Base {
-    public static AndroidDriver<AndroidElement> capabilities() throws MalformedURLException {
+public class HybridBase {
+    public static AndroidDriver<AndroidElement> capabilities(String device) throws MalformedURLException {
         File apk = new File("C:\\Users\\anicolle\\eclipse-workspace\\Tutorial\\src\\main\\java\\ApiDemos-debug.apk");
         DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability(MobileCapabilityType.DEVICE_NAME, "device");
 
+        if(device.equals("emulator")){
+            cap.setCapability(MobileCapabilityType.DEVICE_NAME, "device");
+
+        }
+        else if(device.equals("real")){
+            cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Device"); //to run from real smarthphone
+        }
         cap.setCapability(MobileCapabilityType.APP, apk.getAbsolutePath());
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 
