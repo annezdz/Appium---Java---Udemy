@@ -7,9 +7,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class HybridBase {
+public class HybridBaseEcommerce {
     public static AndroidDriver<AndroidElement> capabilities(String device) throws MalformedURLException {
-        File apk = new File("C:\\Users\\anicolle\\eclipse-workspace\\Tutorial\\src\\main\\apps\\ApiDemos-debug.apk");
+        File apk = new File("C:\\Users\\anicolle\\eclipse-workspace\\Tutorial\\src\\main\\apps\\General-Store.apk");
         DesiredCapabilities cap = new DesiredCapabilities();
 
         if(device.equals("emulator")){
@@ -22,6 +22,7 @@ public class HybridBase {
         cap.setCapability(MobileCapabilityType.APP, apk.getAbsolutePath());
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         cap.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT,14);
+
 
         AndroidDriver<AndroidElement> driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"),cap);
 
