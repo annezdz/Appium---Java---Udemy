@@ -2,20 +2,24 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static io.appium.java_client.touch.LongPressOptions.longPressOptions;
 import static io.appium.java_client.touch.TapOptions.tapOptions;
 import static io.appium.java_client.touch.offset.ElementOption.element;
 
-public class Ecommerce_TC_4 extends HybridBaseEcommerce {
+public class Ecommerce_TC_5 extends HybridBaseEcommerce {
     public static void main(String[] args) throws MalformedURLException, InterruptedException {
         AndroidDriver<AndroidElement> driver = capabilities("emulator");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -60,26 +64,8 @@ public class Ecommerce_TC_4 extends HybridBaseEcommerce {
         Thread.sleep(4000);
         driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"$160.97\"));");
 
-        int counte = driver.findElements(By.id("com.androidsample.generalstore:id/productPrice")).size();
-        double sum = 0;
 
-        for(int i = 0; i < counte; i++){
-            String amount1 = driver.findElements(By.id("com.androidsample.generalstore:id/productPrice"))
-                    .get(i).getText();
-            double amount = getAmount(amount1);
-            sum += amount;
-        }
 
-        System.out.println("Total: " + sum);
-
-        String totalValue = driver.findElement(By.id("com.androidsample.generalstore:id/totalAmountLbl")).getText();
-
-        totalValue = totalValue.substring(1);
-        double num = Double.parseDouble(totalValue);
-
-        System.out.println("Label value: " + totalValue);
-
-        Assert.assertSame(sum,num);
 
         //Mobile Gestures
 
@@ -89,24 +75,20 @@ public class Ecommerce_TC_4 extends HybridBaseEcommerce {
         TouchAction action = new TouchAction(driver);
         action.tap(tapOptions().withElement(element(checkbox))).perform();
 
-
-        //TouchAction action = new TouchAction(driver);
-
-        WebElement terms = driver.findElement(By.id("com.androidsample.generalstore:id/termsButton"));
-
-        action.longPress(longPressOptions().withElement(element(terms))
-                .withDuration(Duration.ofSeconds(2))).release().perform();
-
-        driver.findElement(By.id("android:id/button1")).click();
         driver.findElement(By.id("com.androidsample.generalstore:id/btnProceed")).click();
 
+        Thread.sleep(6000);
+        Set<String> contexts = driver.getContextHandles();
 
-    }
-    public static double getAmount(String value){
+        for(String contextName : contexts){
+            System.out.println(contextName);
+        }
 
-        value = value.substring(1);
-        return Double.parseDouble(value);
-
+        driver.context("WEBVIEW_com.androidsample.generalstore");
+        driver.findElement(By.name("q")).sendKeys("Appium Lovers");
+        driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
+        Thread.sleep(3000);
+        driver.pressKey(new KeyEvent(AndroidKey.BACK));
     }
 
 
